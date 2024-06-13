@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import {InjectRepository} from "@nestjs/typeorm";
+import {Employee} from "./entities/employee.entity";
+import {Repository, UpdateResult} from "typeorm";
 
 @Injectable()
 export class EmployeesService {
-  create(createEmployeeDto: CreateEmployeeDto) {
-    return 'This action adds a new employee';
+
+  constructor(
+      @InjectRepository(Employee)
+      private employeeRepository: Repository<Employee>,
+  ) { }
+
+  create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
+    return this.employeeRepository.save(createEmployeeDto);
   }
 
-  findAll() {
-    return `This action returns all employees`;
+  findAll(): Promise<Employee[]> {
+    return this.employeeRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} employee`;
+  findOne(id: number): Promise<Employee | null> {
+    return this.employeeRepository.findOneBy({id});
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return `This action updates a #${id} employee`;
+  update(id: number, updateEmployeeDto: UpdateEmployeeDto): Promise<UpdateResult> {
+    return this.employeeRepository.update(id, updateEmployeeDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  async remove(id: number): Promise<void> {
+    await this.employeeRepository.delete(id);
   }
 }
