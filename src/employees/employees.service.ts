@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import {InjectRepository} from "@nestjs/typeorm";
-import {Employee} from "./entities/employee.entity";
-import {Repository, UpdateResult} from "typeorm";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Employee } from './entities/employee.entity';
+import { Repository, UpdateResult } from 'typeorm';
+import { Todo } from '../todos/entities/todo.entity';
 
 @Injectable()
 export class EmployeesService {
-
   constructor(
-      @InjectRepository(Employee)
-      private employeeRepository: Repository<Employee>,
-  ) { }
+    @InjectRepository(Employee)
+    private employeeRepository: Repository<Employee>,
+    @InjectRepository(Todo)
+    private todoRepository: Repository<Todo>,
+  ) {}
 
   create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     return this.employeeRepository.save(createEmployeeDto);
@@ -22,10 +24,16 @@ export class EmployeesService {
   }
 
   findOne(id: number): Promise<Employee | null> {
-    return this.employeeRepository.findOneBy({id});
+    return this.employeeRepository.findOne({
+      where: { id },
+      relations: ['todos'],
+    });
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto): Promise<UpdateResult> {
+  update(
+    id: number,
+    updateEmployeeDto: UpdateEmployeeDto,
+  ): Promise<UpdateResult> {
     return this.employeeRepository.update(id, updateEmployeeDto);
   }
 

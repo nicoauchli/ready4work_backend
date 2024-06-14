@@ -1,13 +1,13 @@
-import {ApiProperty} from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateEmployeeDto {
-    @ApiProperty({
-        description: "Firstname of employee"
-    })
-    firstname: string
+  @ApiProperty({
+    description: 'Firstname of employee',
+  })
+  firstname: string;
 
-    @ApiProperty({
-        description: "Lastname of employee",
-    })
-    lastname: string
+  @ApiProperty({
+    description: 'Lastname of employee',
+  })
+  lastname: string;
 }

@@ -1,29 +1,26 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Employee} from "../../employees/entities/employee.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Employee } from '../../employees/entities/employee.entity';
 
 @Entity()
 export class Todo {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  title: string;
 
-    @Column()
-    title: string;
+  @Column({
+    nullable: true,
+  })
+  description: string;
 
-    @Column({
-        nullable: true
-    })
-    description: string;
+  @Column()
+  type: string;
 
-    @Column()
-    type: string;
+  @Column()
+  state: string;
 
-    @Column()
-    state: string
-
-    @ManyToOne(() => Employee, employee => employee.todos,
-        {cascade: true})
-    employee: Employee;
+  @ManyToOne(() => Employee, (employee) => employee.todos, { cascade: true })
+  @JoinColumn({ name: 'employee_id' })
+  employee: Employee;
 }
-
-
