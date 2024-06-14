@@ -46,13 +46,18 @@ export class TodosService {
   }
 
   async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    const todo = await this.todoRepository.findOne({ where: { id }, relations: ['employee'] });
+    const todo = await this.todoRepository.findOne({
+      where: { id },
+      relations: ['employee'],
+    });
     if (!todo) {
       throw new Error('Todo not found');
     }
 
     if (updateTodoDto.employee_id) {
-      const employee = await this.employeeRepository.findOne({ where: { id: updateTodoDto.employee_id } });
+      const employee = await this.employeeRepository.findOne({
+        where: { id: updateTodoDto.employee_id },
+      });
       if (!employee) {
         throw new Error('Employee not found');
       }
@@ -65,5 +70,14 @@ export class TodosService {
 
   remove(id: number) {
     return this.todoRepository.delete(id);
+  }
+
+  async updateStatus(id: number, state: string) {
+    const todo = await this.todoRepository.findOneBy({ id });
+    if (!todo) {
+      throw new Error('Todo not found');
+    }
+    todo.state = state;
+    return this.todoRepository.save(todo);
   }
 }

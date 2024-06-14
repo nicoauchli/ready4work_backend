@@ -3,4 +3,4 @@ export enum STATE {
   DOING = 'doing',
   WAITING = 'waiting',
   DONE = 'done',
-};
+}

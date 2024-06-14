@@ -5,9 +5,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Employee } from './entities/employee.entity';
 import { Repository, UpdateResult } from 'typeorm';
 import { Todo } from '../todos/entities/todo.entity';
-import { CreateTodoDto } from "../todos/dto/create-todo.dto";
-import { STATE } from "../enums/State";
-import { TYPE } from "../enums/Type";
+import { CreateTodoDto } from '../todos/dto/create-todo.dto';
+import { STATE } from '../enums/State';
+import { TYPE } from '../enums/Type';
 
 @Injectable()
 export class EmployeesService {
@@ -19,8 +19,20 @@ export class EmployeesService {
   ) {}
 
   private readonly defaultTodos: CreateTodoDto[] = [
-    { title: 'Brief 1. Arbeitstag', description: "", type: TYPE.MAIL, state: STATE.TODO, employee_id: 0 },
-    { title: 'Einführung 1. Woche', description: "", type: TYPE.MAIL, state: STATE.TODO, employee_id: 0 },
+    {
+      title: 'Brief 1. Arbeitstag',
+      description: '',
+      type: TYPE.MAIL,
+      state: STATE.TODO,
+      employee_id: 0,
+    },
+    {
+      title: 'Einführung 1. Woche',
+      description: '',
+      type: TYPE.MAIL,
+      state: STATE.TODO,
+      employee_id: 0,
+    },
   ];
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
