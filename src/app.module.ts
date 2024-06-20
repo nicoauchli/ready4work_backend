@@ -4,7 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Employee } from './employees/entities/employee.entity';
 import { TodosModule } from './todos/todos.module';
 import { Todo } from './todos/entities/todo.entity';
-import { EmployeeToTodo } from './entities/employeeToTodo';
+import { EmployeeToTodoModule } from './employee-to-todo/employee-to-todo.module';
+import { EmployeeToTodo } from './employee-to-todo/entities/employee-to-todo.entity';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EmployeeToTodo } from './entities/employeeToTodo';
       synchronize: true,
     }),
     TodosModule,
+    EmployeeToTodoModule,
   ],
 })
 export class AppModule {}

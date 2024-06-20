@@ -4,7 +4,7 @@ import { EmployeesController } from './employees.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Employee } from './entities/employee.entity';
 import { Todo } from '../todos/entities/todo.entity';
-import { EmployeeToTodo } from '../entities/employeeToTodo';
+import { EmployeeToTodo } from '../employee-to-todo/entities/employee-to-todo.entity';
 
 @Module({
   controllers: [EmployeesController],
