@@ -1,26 +1,67 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEmployeeToTodoDto } from './dto/create-employee-to-todo.dto';
 import { UpdateEmployeeToTodoDto } from './dto/update-employee-to-todo.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { EmployeeToTodo } from './entities/employee-to-todo.entity';
+import { Repository } from 'typeorm';
+import { Todo } from '../todos/entities/todo.entity';
+import { Employee } from '../employees/entities/employee.entity';
 
 @Injectable()
 export class EmployeeToTodoService {
-  create(createEmployeeToTodoDto: CreateEmployeeToTodoDto) {
-    return 'This action adds a new employeeToTodo';
+  constructor(
+    @InjectRepository(EmployeeToTodo)
+    private employeeToTodoRepository: Repository<EmployeeToTodo>,
+    @InjectRepository(Todo)
+    private todoRepository: Repository<Todo>,
+    @InjectRepository(Employee)
+    private employeeRepository: Repository<Employee>,
+  ) {}
+  async create(createEmployeeToTodoDto: CreateEmployeeToTodoDto) {
+    const employee = await this.employeeRepository.findOne({ where: {id: createEmployeeToTodoDto.employeedId}});
+    const todo = await this.todoRepository.findOne( { where: { id: createEmployeeToTodoDto.todoId}});
+
+    if (!employee || !todo) {
+      throw new Error('Employee or Todo not found');
+    }
+    const employeeTodo = this.employeeToTodoRepository.create({
+      ...createEmployeeToTodoDto,
+      employee,
+      todo,
+    });
+
+    return await this.employeeToTodoRepository.save(employeeTodo);
   }
 
   findAll() {
-    return `This action returns all employeeToTodo`;
+    return this.employeeToTodoRepository.find(
+      { relations: ['employee', 'todo'] },
+    );
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} employeeToTodo`;
+  async findOne(id: number): Promise<EmployeeToTodo> {
+    const employeeToTodo = await this.employeeToTodoRepository.findOne({where: {id: id}, relations: ['employee', 'todo']});
+    if (!employeeToTodo) {
+      throw new NotFoundException(`EmployeeToTodo with ID ${id} not found`);
+    }
+    return employeeToTodo;
   }
 
-  update(id: number, updateEmployeeToTodoDto: UpdateEmployeeToTodoDto) {
-    return `This action updates a #${id} employeeToTodo`;
+  async update(id: number, updateEmployeeToTodoDto: UpdateEmployeeToTodoDto): Promise<EmployeeToTodo> {
+    const employeeToTodo = await this.employeeToTodoRepository.preload({
+      id,
+      ...updateEmployeeToTodoDto,
+    });
+
+    if (!employeeToTodo) {
+      throw new NotFoundException(`EmployeeToTodo with ID ${id} not found`);
+    }
+
+    return this.employeeToTodoRepository.save(employeeToTodo);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employeeToTodo`;
+  async remove(id: number): Promise<void> {
+    const employeeToTodo = await this.findOne(id);
+    await this.employeeToTodoRepository.remove(employeeToTodo);
   }
 }

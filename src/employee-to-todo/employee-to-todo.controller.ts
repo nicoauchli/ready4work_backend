@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { EmployeeToTodoService } from './employee-to-todo.service';
 import { CreateEmployeeToTodoDto } from './dto/create-employee-to-todo.dto';
 import { UpdateEmployeeToTodoDto } from './dto/update-employee-to-todo.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('EmployeeToTodo')
 @Controller('employee-to-todo')
 export class EmployeeToTodoController {
   constructor(private readonly employeeToTodoService: EmployeeToTodoService) {}
@@ -23,7 +33,10 @@ export class EmployeeToTodoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmployeeToTodoDto: UpdateEmployeeToTodoDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateEmployeeToTodoDto: UpdateEmployeeToTodoDto,
+  ) {
     return this.employeeToTodoService.update(+id, updateEmployeeToTodoDto);
   }
 
