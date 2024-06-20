@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Employee } from './employees/entities/employee.entity';
 import { TodosModule } from './todos/todos.module';
 import { Todo } from './todos/entities/todo.entity';
-import { ChecklistModule } from './checklist/checklist.module';
+import { EmployeeToTodo } from './entities/employeeToTodo';
 
 @Module({
   imports: [
@@ -16,11 +16,10 @@ import { ChecklistModule } from './checklist/checklist.module';
       username: 'postgres',
       password: 'wRWSQnOQgxyUCKaxaLmTjaaEsYWtQTrA',
       database: 'railway',
-      entities: [Employee, Todo],
+      entities: [Employee, Todo, EmployeeToTodo],
       synchronize: true,
     }),
     TodosModule,
-    ChecklistModule,
   ],
 })
 export class AppModule {}

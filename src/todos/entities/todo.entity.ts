@@ -1,11 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Employee } from '../../employees/entities/employee.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { EmployeeToTodo } from '../../entities/employeeToTodo';
 
 @Entity()
 export class Todo {
@@ -24,9 +18,11 @@ export class Todo {
   type: string;
 
   @Column()
-  state: string;
+  isDefault: boolean;
 
-  @ManyToOne(() => Employee, (employee) => employee.todos, { cascade: true })
-  @JoinColumn({ name: 'employee_id' })
-  employee: Employee;
+  @Column('simple-array')
+  content: string[];
+
+  @OneToMany(() => EmployeeToTodo, (employeeToTodo) => employeeToTodo.todo)
+  public employeeToTodo: EmployeeToTodo[];
 }

@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Todo } from '../../todos/entities/todo.entity';
+import { EmployeeToTodo } from '../../entities/employeeToTodo';
 
 @Entity()
 export class Employee {
@@ -12,6 +12,6 @@ export class Employee {
   @Column()
   lastname: string;
 
-  @OneToMany(() => Todo, (todo) => todo.employee)
-  todos: Todo[];
+  @OneToMany(() => EmployeeToTodo, (employeeToTodo) => employeeToTodo.employee)
+  public employeeToTodo: EmployeeToTodo[];
 }

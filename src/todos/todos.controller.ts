@@ -42,12 +42,4 @@ export class TodosController {
   remove(@Param('id') id: string) {
     return this.todosService.remove(+id);
   }
-
-  @Patch(':id/state')
-  updateStatus(
-    @Param('id') id: string,
-    @Body() updateTodoStateDto: UpdateTodoStateDto,
-  ) {
-    return this.todosService.updateStatus(+id, updateTodoStateDto.state);
-  }
 }

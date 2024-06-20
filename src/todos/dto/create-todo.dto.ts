@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { STATE } from '../../enums/State';
 import { TYPE } from '../../enums/Type';
 
 export class CreateTodoDto {
@@ -10,6 +9,8 @@ export class CreateTodoDto {
 
   @ApiProperty({
     description: 'Description of the todo',
+    nullable: true,
+    required: false,
   })
   description: string;
 
@@ -19,12 +20,12 @@ export class CreateTodoDto {
   type: TYPE;
 
   @ApiProperty({
-    description: 'State of the todo: todo | in arbeit | wartend | done',
+    description: 'if it is a default todo',
   })
-  state: STATE;
+  isDefault: boolean;
 
   @ApiProperty({
-    description: 'ID of employee the todo belongs to',
+    description: 'content of the todo',
   })
-  employee_id: number;
+  content: string[];
 }
