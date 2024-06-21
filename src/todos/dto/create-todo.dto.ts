@@ -8,13 +8,6 @@ export class CreateTodoDto {
   title: string;
 
   @ApiProperty({
-    description: 'Description of the todo',
-    nullable: true,
-    required: false,
-  })
-  description: string;
-
-  @ApiProperty({
     description: 'Type of the todo',
   })
   type: TYPE;
