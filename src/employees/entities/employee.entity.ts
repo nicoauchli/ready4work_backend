@@ -12,6 +12,6 @@ export class Employee {
   @Column()
   lastname: string;
 
-  @OneToMany(() => EmployeeToTodo, (employeeToTodo) => employeeToTodo.employee)
+  @OneToMany(() => EmployeeToTodo, (employeeToTodo) => employeeToTodo.employee, { cascade: true })
   public employeeToTodo: EmployeeToTodo[];
 }
