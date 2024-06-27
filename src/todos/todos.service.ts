@@ -28,6 +28,10 @@ export class TodosService {
     });
   }
 
+  findAllDefaultTodos(): Promise<Todo[] | null> {
+    return this.todoRepository.findBy( { isDefault: true }, );
+  }
+
   async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
     const todo = await this.todoRepository.findOne({
       where: { id },

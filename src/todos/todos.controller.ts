@@ -18,6 +18,11 @@ import { UpdateTodoStateDto } from './dto/update-todo-state.dto';
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
+  @Get('default')
+  async findDefaultTodos() {
+    return this.todosService.findAllDefaultTodos();
+  }
+
   @Post()
   create(@Body() createTodoDto: CreateTodoDto) {
     return this.todosService.create(createTodoDto);
@@ -42,4 +47,7 @@ export class TodosController {
   remove(@Param('id') id: string) {
     return this.todosService.remove(+id);
   }
+
+
+
 }
