@@ -19,9 +19,9 @@ export class EmployeeToTodo {
   @Column()
   description: string;
 
-  @ManyToOne(() => Employee, (employee) => employee.employeeToTodo)
+  @ManyToOne(() => Employee, (employee) => employee.employeeToTodo,{ onDelete: 'CASCADE' })
   employee: Employee;
 
-  @ManyToOne(() => Todo, (todo) => todo.employeeToTodo)
+  @ManyToOne(() => Todo, (todo) => todo.employeeToTodo, {onDelete: 'CASCADE'})
   todo: Todo;
 }

@@ -18,6 +18,6 @@ export class Todo {
   @Column('simple-array')
   content: string[];
 
-  @OneToMany(() => EmployeeToTodo, (employeeToTodo) => employeeToTodo.todo)
+  @OneToMany(() => EmployeeToTodo, (employeeToTodo) => employeeToTodo.todo, { cascade: ['insert', 'update', 'remove'], onDelete: 'CASCADE' })
   public employeeToTodo: EmployeeToTodo[];
 }

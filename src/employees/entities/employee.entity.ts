@@ -12,6 +12,6 @@ export class Employee {
   @Column()
   lastname: string;
 
-  @OneToMany(() => EmployeeToTodo, (employeeToTodo) => employeeToTodo.employee, { cascade: true })
+  @OneToMany(() => EmployeeToTodo, (employeeToTodo) => employeeToTodo.employee, { cascade: ['insert', 'update', 'remove'], onDelete: 'CASCADE' })
   public employeeToTodo: EmployeeToTodo[];
 }
