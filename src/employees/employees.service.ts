@@ -7,6 +7,7 @@ import { Repository, UpdateResult } from 'typeorm';
 import { EmployeeWithTodos } from './interfaces/employeeWithTodo.interface';
 import { Todo } from '../todos/entities/todo.entity';
 import { EmployeeToTodo } from '../employee-to-todo/entities/employee-to-todo.entity';
+import { UpdateTodoDto } from '../todos/dto/update-todo.dto';
 
 @Injectable()
 export class EmployeesService {
@@ -44,11 +45,15 @@ export class EmployeesService {
     return this.employeeRepository.find();
   }
 
-  update(
+  async update(
     id: number,
     updateEmployeeDto: UpdateEmployeeDto,
-  ): Promise<UpdateResult> {
-    return this.employeeRepository.update(id, updateEmployeeDto);
+  ): Promise<Employee> {
+    const employee = await this.employeeRepository.findOne({
+      where: {id}
+    });
+    Object.assign(employee, updateEmployeeDto);
+    return this.employeeRepository.save(updateEmployeeDto);
   }
 
   async remove(id: number): Promise<void> {

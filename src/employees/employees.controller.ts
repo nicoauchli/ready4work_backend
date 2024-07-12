@@ -13,6 +13,7 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Employee } from './entities/employee.entity';
 import { EmployeeWithTodos } from './interfaces/employeeWithTodo.interface';
+import { UpdateTodoDto } from '../todos/dto/update-todo.dto';
 
 @ApiTags('employees')
 @Controller('employees')
