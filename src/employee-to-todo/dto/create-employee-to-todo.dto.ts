@@ -4,7 +4,7 @@ export class CreateEmployeeToTodoDto {
   @ApiProperty({
     description: '',
   })
-  employeedId: number;
+  employeeId: number;
 
   @ApiProperty({
     description: '',

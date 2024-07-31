@@ -18,7 +18,7 @@ export class EmployeeToTodoService {
     private employeeRepository: Repository<Employee>,
   ) {}
   async create(createEmployeeToTodoDto: CreateEmployeeToTodoDto) {
-    const employee = await this.employeeRepository.findOne({ where: {id: createEmployeeToTodoDto.employeedId}});
+    const employee = await this.employeeRepository.findOne({ where: {id: createEmployeeToTodoDto.employeeId}});
     const todo = await this.todoRepository.findOne( { where: { id: createEmployeeToTodoDto.todoId}});
 
     if (!employee || !todo) {
@@ -29,7 +29,6 @@ export class EmployeeToTodoService {
       employee,
       todo,
     });
-
     return await this.employeeToTodoRepository.save(employeeTodo);
   }
 
