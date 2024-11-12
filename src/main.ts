@@ -15,7 +15,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200', 'https://ready4work-1a4929f270c2.herokuapp.com'],
   });
 
   await app.listen( process.env.PORT || 3000);
