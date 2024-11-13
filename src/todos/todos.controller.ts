@@ -43,7 +43,7 @@ export class TodosController {
     return this.todosService.update(+id, updateTodoDto);
   }
 
-  @Delete(':id/update')
+  @Delete(':id')
   remove(@Param('id') id: string) {
     return this.todosService.remove(+id);
   }
