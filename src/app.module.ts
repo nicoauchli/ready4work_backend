@@ -21,7 +21,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
         url: configService.get<string>('DATABASE_URL'),
-        ssl: { rejectUnauthorized: false },
+        // ssl: { rejectUnauthorized: false },
         entities: [Employee, Todo, EmployeeToTodo],
         synchronize: true,
       }),

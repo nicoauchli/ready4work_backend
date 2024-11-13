@@ -59,6 +59,30 @@ export class EmployeeToTodoService {
     return this.employeeToTodoRepository.save(employeeToTodo);
   }
 
+  async updateEmployeeChecklistTodos(id: number): Promise<EmployeeToTodo[]> {
+    const allDefaultTodos: Todo[] = await this.todoRepository.findBy({ isDefault: true });
+    const employeeDefaultTodos: EmployeeToTodo[] = await this.employeeToTodoRepository.find({
+      where: { employee: { id }, todo: { isDefault: true } },
+      relations: ['todo'],
+    });
+    const missingTodos = allDefaultTodos.filter(defaultTodo =>
+      !employeeDefaultTodos.some(employeeTodo => employeeTodo.todo.id === defaultTodo.id)
+    );
+    const newEmployeeTodos = missingTodos.map(todo => this.employeeToTodoRepository.create({
+      employee: { id },
+      todo,
+      state: 'todo',
+      description: '',
+    }));
+
+    await this.employeeToTodoRepository.save(newEmployeeTodos);
+
+    return await this.employeeToTodoRepository.find({
+      where: { employee: { id } },
+      relations: ['todo'],
+    });
+  }
+
   async remove(id: number): Promise<void> {
     const employeeToTodo = await this.findOne(id);
     await this.employeeToTodoRepository.remove(employeeToTodo);

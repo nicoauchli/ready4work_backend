@@ -32,6 +32,11 @@ export class EmployeeToTodoController {
     return this.employeeToTodoService.findOne(+id);
   }
 
+  @Get(':id/user-checklist-update')
+  updateUserChecklistTodos(@Param('id') id: string) {
+    return this.employeeToTodoService.updateEmployeeChecklistTodos(+id)
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,

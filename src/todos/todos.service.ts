@@ -5,12 +5,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Todo } from './entities/todo.entity';
 import { Repository } from 'typeorm';
 import { Employee } from '../employees/entities/employee.entity';
+import { EmployeeToTodo } from '../employee-to-todo/entities/employee-to-todo.entity';
 
 @Injectable()
 export class TodosService {
   constructor(
     @InjectRepository(Todo)
     private todoRepository: Repository<Todo>,
+    @InjectRepository(EmployeeToTodo)
+    private employeeToTodoRepository: Repository<EmployeeToTodo>,
   ) {}
 
   async create(createTodoDto: CreateTodoDto): Promise<Todo> {
