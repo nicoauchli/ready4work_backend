@@ -1,5 +1,5 @@
 # Verwende ein Node-Image als Basis für die Backend-Anwendung
-FROM node:16-alpine
+FROM node:20-alpine
 
 # Arbeitsverzeichnis erstellen und setzen
 WORKDIR /app
